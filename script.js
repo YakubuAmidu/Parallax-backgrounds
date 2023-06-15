@@ -5,6 +5,7 @@ const CANVAS_WIDTH = canvas.width = 800;
 const CANVAS_HEIGHT = canvas.height = 700;
 
 let gameSpeed = 4;
+let gameFrame = 0;
 
 const backgroundLayer1 = new Image();
 backgroundLayer1.src = 'img/layer-1.png';
@@ -31,7 +32,7 @@ class Layer {
     constructor(image, speedModifier){
         this.x = 0;
         this.y = 0;
-        this.width = 800;
+        this.width = 2400;
         this.height = 700;
         this.image = image;
         this.speedModifier = speedModifier;
@@ -40,10 +41,11 @@ class Layer {
     
     update(){
         this.speed = gameSpeed * this.speedModifier;
-        if(this.x <= - this.width){
-            this.x = 0;
-        }
-        this.x = Math.floor(this.x - this.speed);
+        // if(this.x <= - this.width){
+        //     this.x = 0;
+        // }
+        //this.x = Math.floor(this.x - this.speed);
+        this.x = gameFrame * this.speed % this.width;
     }
 
     draw(){
@@ -65,7 +67,8 @@ function animate(){
     gameObject.forEach(object => {
         object.update();
         object.draw();
-    })
+    });
+    gameFrame--;
     requestAnimationFrame(animate);
 }
 
